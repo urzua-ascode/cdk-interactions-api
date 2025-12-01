@@ -37,3 +37,35 @@ API_URL="<pega_tu_url_de_api_gateway_aqui>"
 curl -X GET "$API_URL/interactions/123456789"
 
 
+
+
+## Architecture Diagram
+
+```mermaid
+graph TB
+    A["Developer"] -->|Code| B["GitHub<br/>Repository"]
+    B -->|Trigger| C["AWS CDK<br/>Stack"]
+    C -->|Deploy| D["CloudFormation<br/>Stack"]
+    
+    D -->|Create| E["API Gateway<br/>REST API"]
+    D -->|Create| F["Lambda<br/>Functions"]
+    D -->|Create| G["DynamoDB<br/>Table"]
+    
+    E -->|Invoke| F
+    F -->|Read/Write| G
+    
+    H["Client"] -->|HTTP Request| E
+    E -->|Response| H
+    
+    F -->|Log| I["CloudWatch<br/>Logs"]
+    
+    style A fill:#e1f5ff
+    style B fill:#f3e5f5
+    style C fill:#fff9c4
+    style D fill:#ffe0b2
+    style E fill:#c8e6c9
+    style F fill:#c8e6c9
+    style G fill:#c8e6c9
+    style H fill:#e1f5ff
+    style I fill:#fce4ec
+```
